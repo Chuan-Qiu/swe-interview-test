@@ -7,6 +7,12 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 
 //implement the CORS config
+const cors = require('cors');
+const corsOptions = {
+    origin: process.env.FRONTEND_ORIGIN || 'http://localhost:3000',
+    optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 //products array
 let products = [
@@ -25,12 +31,25 @@ const fetchImageUrl = () => {
 
 //implement the get api for getting products
 app.get('/api/products', (req, res) => {
-
+    const productsWithImages = products.map((product) => ({
+        ...product,
+        imageUrl: product.imageUrl || fetchImageUrl(),
+    }));
+    products = productsWithImages;
+    res.json(productsWithImages);
 });
 
 //implement the delete api for deleting a product by Id
 app.delete('/api/products/:id', (req, res) => {
-    
+    const productId = parseInt(req.params.id, 10);
+    const existingLength = products.length;
+    products = products.filter((product) => product.id !== productId);
+
+    if (products.length === existingLength) {
+        return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.json({ message: 'Product deleted successfully' });
 });
 
 app.listen(PORT, () => {
