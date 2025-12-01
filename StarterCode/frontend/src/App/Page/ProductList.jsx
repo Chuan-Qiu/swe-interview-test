@@ -82,11 +82,19 @@ const ProductList = () => {
               <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
                 <Card
                   sx={{
+                    position: 'relative',
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                   }}
                 >
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleDelete(product.id)}
+                    sx={{ position: 'absolute', top: 8, left: 8, zIndex: 1 }}
+                  >
+                    <DeleteIcon color="error" />
+                  </IconButton>
                   <CardMedia
                     component="img"
                     height="200"
@@ -94,21 +102,16 @@ const ProductList = () => {
                     alt={product.name}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h6" component="div">
+                    <Typography gutterBottom variant="h6" component="div" fontWeight={700}>
                       {product.name}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                      {product.description}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight="bold">
+                    <Typography variant="body1" color="text.primary" sx={{ mb: 1 }}>
                       ${product.price}
                     </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {product.description}
+                    </Typography>
                   </CardContent>
-                  <CardActions disableSpacing sx={{ justifyContent: 'flex-end' }}>
-                    <IconButton aria-label="delete" onClick={() => handleDelete(product.id)}>
-                      <DeleteIcon color="error" />
-                    </IconButton>
-                  </CardActions>
                 </Card>
               </Grid>
             ))
