@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000';
+const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5001';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -78,7 +78,7 @@ const ProductList = () => {
             </Grid>
           ) : (
             products.map((product) => (
-              <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+              <Grid item key={product.id} xs={12} sm={6} md={4} lg={4} xl={4}>
                 <Card
                   sx={{
                     position: 'relative',
